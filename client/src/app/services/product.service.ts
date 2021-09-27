@@ -1,20 +1,20 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { combineLatest, of, BehaviorSubject, forkJoin } from "rxjs";
-import { catchError, map, shareReplay, switchMap } from "rxjs/operators";
+import { combineLatest, of, BehaviorSubject, forkJoin } from 'rxjs';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 
-import { Product } from "../interfaces/product";
-import { ProductCategoryService } from "./product-category.service";
-import { Supplier } from "../interfaces/supplier";
-import { SupplierService } from "./supplier.service";
-import { handleError } from "../utils";
+import { Product } from '../interfaces/product';
+import { ProductCategoryService } from './product-category.service';
+import { Supplier } from '../interfaces/supplier';
+import { SupplierService } from './supplier.service';
+import { handleError } from '../utils';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ProductService {
-  private productsUrl = "/products";
+  private productsUrl = '/products';
 
   products$ = this.http
     .get<Product[]>(this.productsUrl)
@@ -25,9 +25,9 @@ export class ProductService {
     categories: this.productCategoryService.productCategories$,
   }).pipe(
     map(({ products, categories }) =>
-      products.map((p) => ({
+      products.map<Product>((p) => ({
         ...p,
-        category: categories.find((c) => p.categoryId === c.id).name,
+        category: categories.find((c) => p.categoryId === c.id)?.name,
       }))
     ),
     shareReplay(1)
@@ -49,7 +49,7 @@ export class ProductService {
   ]).pipe(
     map(([product, suppliers]: [Product, Supplier[]]) =>
       suppliers.filter((supplier) =>
-        product ? product.supplierIds.includes(supplier.id) : of(null)
+        product ? product.supplierIds?.includes(supplier.id) : of(null)
       )
     )
   );
@@ -60,7 +60,7 @@ export class ProductService {
     private supplierService: SupplierService
   ) {}
 
-  changeSelectedProduct(selectedProductId: number | null): void {
+  changeSelectedProduct(selectedProductId: number): void {
     this.productSelectedAction.next(selectedProductId);
   }
 }
