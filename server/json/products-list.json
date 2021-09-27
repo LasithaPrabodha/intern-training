@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "productName": "Leaf Rake",
+        "categoryId": 1
+    },
+    {
+        "id": 2,
+        "productName": "Garden Cart",
+        "categoryId": 1
+    },
+    {
+        "id": 5,
+        "productName": "Hammer",
+        "categoryId": 3
+    },
+    {
+        "id": 8,
+        "productName": "Saw",
+        "categoryId": 3
+    },
+    {
+        "id": 10,
+        "productName": "Video Game Controller",
+        "categoryId": 5
+    }
+]
